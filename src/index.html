@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  
+  <!-- Primary Meta Tags -->
+  <title>BookMyTemple - Temple Booking App</title>
+  <meta name="title" content="BookMyTemple - Temple Booking App">
+  <meta name="description" content="Book temple sevas, watch live darshan, and order prasadam - your spiritual companion">
+  
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#FF7A00">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="BookMyTemple">
+  
+  <!-- Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  
+  <!-- Apple Touch Icons -->
+  <link rel="apple-touch-icon" sizes="72x72" href="/icons/icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="96x96" href="/icons/icon-96x96.png">
+  <link rel="apple-touch-icon" sizes="128x128" href="/icons/icon-128x128.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/icons/icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="/icons/icon-192x192.png">
+  <link rel="apple-touch-icon" sizes="384x384" href="/icons/icon-384x384.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="/icons/icon-512x512.png">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-72x72.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-72x72.png">
+  
+  <!-- Microsoft Tiles -->
+  <meta name="msapplication-TileColor" content="#FF7A00">
+  <meta name="msapplication-TileImage" content="/icons/icon-144x144.png">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+  
+  <!-- Preload critical resources -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.tsx"></script>
+  
+  <!-- PWA Install Prompt -->
+  <noscript>
+    <div style="padding: 20px; text-align: center; background: #FFF8F0;">
+      <p>Please enable JavaScript to use BookMyTemple.</p>
+    </div>
+  </noscript>
+  
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then((registration) => {
+            console.log('ServiceWorker registered: ', registration);
+            
+            // Check for updates
+            registration.addEventListener('updatefound', () => {
+              const newWorker = registration.installing;
+              newWorker.addEventListener('statechange', () => {
+                if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  // New service worker available, show update notification
+                  console.log('New content available, please refresh.');
+                }
+              });
+            });
+          })
+          .catch((error) => {
+            console.log('ServiceWorker registration failed: ', error);
+          });
+      });
+    }
+
+    // Handle install prompt
+    let deferredPrompt;
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      // Store the event so it can be triggered later
+      window.deferredPrompt = deferredPrompt;
+    });
+
+    // Track install
+    window.addEventListener('appinstalled', () => {
+      console.log('PWA was installed');
+      deferredPrompt = null;
+    });
+  </script>
+</body>
+</html>

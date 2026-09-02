@@ -1,0 +1,14 @@
+# BookMyTemple - robots.txt
+
+User-agent: *
+Allow: /
+
+# PWA files
+Allow: /manifest.json
+Allow: /service-worker.js
+
+# Icons
+Allow: /icons/
+
+# Sitemap
+Sitemap: https://yourdomain.com/sitemap.xml

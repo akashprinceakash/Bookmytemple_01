@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Read(//c/Users/Akash/AppData/Local/Temp/claude/**)",
+      "Bash(xargs -I{} ls -la \"{}\")",
+      "Bash(sort -k6,7)"
+    ]
+  }
+}
